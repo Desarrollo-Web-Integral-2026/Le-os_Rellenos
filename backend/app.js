@@ -1,11 +1,14 @@
 require('dotenv').config();
 const express = require('express');
 const connectDB = require('./src/config/database');
+const { startDataRetentionJob } = require('./src/jobs/dataRetention.job');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 connectDB();
+startDataRetentionJob();
+
 
 app.use(express.json());
 
