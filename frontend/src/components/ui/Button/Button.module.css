@@ -1,0 +1,58 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transition-base), transform var(--transition-base);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* Tamaños */
+.md {
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--fs-body);
+}
+
+.sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--fs-small);
+}
+
+/* Variantes */
+.primary {
+  background-color: var(--color-orange-primary);
+  color: var(--color-text-on-primary);
+}
+.primary:hover:not(:disabled) {
+  background-color: var(--color-orange-secondary);
+}
+
+.secondary {
+  background-color: transparent;
+  color: var(--color-orange-primary);
+  border: 1px solid var(--color-orange-primary);
+}
+.secondary:hover:not(:disabled) {
+  background-color: rgba(249, 115, 22, 0.1);
+}
+
+.whatsapp {
+  background-color: var(--color-whatsapp);
+  color: #FFFFFF;
+}
+.whatsapp:hover:not(:disabled) {
+  background-color: var(--color-whatsapp-hover);
+}
