@@ -1,4 +1,5 @@
 import { CartIcon } from '../../features/CartIcon/CartIcon'
+import { BusinessStatusBadge } from '../../features/BusinessStatusBadge/BusinessStatusBadge'
 import styles from './Header.module.css'
 
 interface HeaderProps {
@@ -10,7 +11,10 @@ export function Header({ onCartClick }: HeaderProps) {
     <header className={styles.header}>
       <div className={styles.inner}>
         <span className={styles.logo}>🪵 LEÑOS RELLENOS</span>
-        <CartIcon onClick={onCartClick} />
+        <div className={styles.rightSection}>
+          <BusinessStatusBadge />
+          <CartIcon onClick={onCartClick} />
+        </div>
       </div>
     </header>
   )

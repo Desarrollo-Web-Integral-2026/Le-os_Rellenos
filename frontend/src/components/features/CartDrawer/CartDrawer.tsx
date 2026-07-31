@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
 import { useCart } from '../../../hooks/useCart'
+import { useBusinessStatus } from '../../../hooks/useBusinessStatus'
 import { CartItemRow } from '../CartItemRow/CartItemRow'
 import { formatPrice } from '../../../utils/formatPrice'
+import { Button } from '../../ui'
 import styles from './CartDrawer.module.css'
 
 interface CartDrawerProps {
@@ -11,8 +13,8 @@ interface CartDrawerProps {
 
 export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   const { items, totalPrice } = useCart()
+  const { isOpen: isBusinessOpen } = useBusinessStatus()
 
-  // Cierra con la tecla Escape — accesibilidad básica de un panel modal
   useEffect(() => {
     if (!isOpen) return
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -50,7 +52,18 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                 <span>Total:</span>
                 <span>{formatPrice(totalPrice)}</span>
               </div>
-              {/* El botón de checkout real se agrega en RF3 */}
+
+              {!isBusinessOpen && (
+                <p className={styles.closedNotice} role="alert">
+                  El negocio está cerrado en este momento. Podrás confirmar tu pedido cuando
+                  volvamos a abrir.
+                </p>
+              )}
+
+              {/* El botón real de checkout (RF3) usará isBusinessOpen para deshabilitarse */}
+              <Button variant="whatsapp" disabled={!isBusinessOpen} className={styles.checkoutPlaceholder}>
+                {isBusinessOpen ? 'Confirmar y enviar a WhatsApp' : 'Negocio cerrado'}
+              </Button>
             </div>
           </>
         )}
