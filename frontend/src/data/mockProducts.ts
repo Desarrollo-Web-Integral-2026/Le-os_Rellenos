@@ -61,7 +61,7 @@ export const mockProducts: Product[] = [
     precio: 19.0,
     imagen: 'https://placehold.co/400x300/241C16/D9B382?text=Pollo',
     id_categoria: 'clasicos',
-    disponible: true, // inactivo por el admin — no debe aparecer (RF1 criterio 3)
+    disponible: false, // inactivo por el admin — no debe aparecer (RF1 criterio 3)
     stock: 0,
   },
 ]
