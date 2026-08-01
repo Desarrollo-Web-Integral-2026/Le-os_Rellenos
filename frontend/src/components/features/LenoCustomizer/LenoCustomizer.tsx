@@ -164,7 +164,7 @@ export function LenoCustomizer({ isOpen, onClose }: LenoCustomizerProps) {
 
           {justAdded && (
             <p className={styles.successMessage} role="status">
-              ¡Tu leño personalizado se agregó al carrito! 🪵
+              ¡Tu leño personalizado se agregó al carrito!
             </p>
           )}
 
