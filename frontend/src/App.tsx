@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { CartProvider } from './context/CartContext'
 import { Container } from './components/layout/Container/Container'
 import { Header } from './components/layout/Header/Header'
+import { Footer } from './components/layout/Footer/Footer'
 import { ProductCatalog } from './components/features/ProductCatalog/ProductCatalog'
 import { CartDrawer } from './components/features/CartDrawer/CartDrawer'
 import { LenoCustomizer } from './components/features/LenoCustomizer/LenoCustomizer'
@@ -23,6 +24,7 @@ function App() {
         </div>
         <ProductCatalog />
       </Container>
+      <Footer />
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
       <LenoCustomizer isOpen={isCustomizerOpen} onClose={() => setIsCustomizerOpen(false)} />
     </CartProvider>

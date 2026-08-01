@@ -1,17 +1,21 @@
+import { useState } from 'react'
+import { PrivacyNoticeModal } from '../PrivacyNoticeModal/PrivacyNoticeModal'
 import styles from './PrivacyNoticeLink.module.css'
 
-// TODO(RNF7): reemplazar el href="#" por la ruta real del Aviso de Privacidad
-// Integral y Simplificado cuando esa issue esté lista. Este componente debe
-// ser visible ANTES de que el usuario capture datos de entrega — no eliminar
-// ni mover de aquí sin revisar el criterio de Actividad 1 (checklist FrontEnd).
 export function PrivacyNoticeLink() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   return (
-    <p className={styles.notice}>
-      Al continuar, tus datos se usarán únicamente para procesar tu pedido. Consulta nuestro{' '}
-      <a href="#" className={styles.link}>
-        Aviso de Privacidad
-      </a>
-      .
-    </p>
+    <>
+      <p className={styles.notice}>
+        Al continuar, tus datos se usarán únicamente para procesar tu pedido. Consulta nuestro{' '}
+        <button type="button" className={styles.link} onClick={() => setIsModalOpen(true)}>
+          Aviso de Privacidad
+        </button>
+        .
+      </p>
+
+      <PrivacyNoticeModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+    </>
   )
 }
