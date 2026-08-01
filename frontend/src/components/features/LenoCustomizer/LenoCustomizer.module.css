@@ -1,0 +1,121 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 30;
+}
+
+.panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(420px, 100%);
+  background-color: var(--color-surface);
+  border-left: 1px solid var(--color-border);
+  z-index: 31;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.closeButton {
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.body {
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.section h3 {
+  margin-bottom: var(--space-2);
+  font-size: var(--fs-h3);
+}
+
+.optionRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+  cursor: pointer;
+}
+
+.optionDisabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.extraCost {
+  color: var(--color-text-muted);
+  font-size: var(--fs-small);
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.previewLine {
+  color: var(--color-text-secondary);
+  font-size: var(--fs-small);
+}
+
+.previewTotal {
+  margin-top: var(--space-2);
+  font-weight: 700;
+  font-size: var(--fs-h3);
+  color: var(--color-orange-primary);
+}
+
+.errorList {
+  list-style: none;
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  font-size: var(--fs-small);
+}
+
+.successMessage {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  font-size: var(--fs-small);
+}
+
+.quantityRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.qtyButton {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-hover);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.addButton {
+  width: 100%;
+}
