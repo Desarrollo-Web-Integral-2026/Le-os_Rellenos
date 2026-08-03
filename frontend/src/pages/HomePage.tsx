@@ -6,9 +6,11 @@ import { ProductCatalog } from '../components/features/ProductCatalog/ProductCat
 import { CartDrawer } from '../components/features/CartDrawer/CartDrawer'
 import { LenoCustomizer } from '../components/features/LenoCustomizer/LenoCustomizer'
 import { Button } from '../components/ui'
+import { usePrefetchProducts } from '../hooks/usePrefetchProducts'
 
 export function HomePage() {
   const [isCustomizerOpen, setIsCustomizerOpen] = useState(false)
+  usePrefetchProducts()
 
   return (
     <>
