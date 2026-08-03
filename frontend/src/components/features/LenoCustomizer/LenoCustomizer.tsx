@@ -72,7 +72,7 @@ export function LenoCustomizer({ isOpen, onClose }: LenoCustomizerProps) {
       <div className={styles.panel} role="dialog" aria-label="Personaliza tu leño" aria-modal="true">
         <div className={styles.header}>
           <h2>Personaliza tu Leño</h2>
-          <button type="button" onClick={onClose} className={styles.closeButton} aria-label="Cerrar">
+          <button type="button" onClick={onClose} className={styles.closeButton} aria-label="Cerrar" title="Cerrar">
             ✕
           </button>
         </div>
@@ -144,8 +144,8 @@ export function LenoCustomizer({ isOpen, onClose }: LenoCustomizerProps) {
               Rellenos:{' '}
               {customization.rellenoIds.length > 0
                 ? customization.rellenoIds
-                    .map((id) => RELLENO_OPTIONS.find((o) => o.id === id)?.label)
-                    .join(', ')
+                  .map((id) => RELLENO_OPTIONS.find((o) => o.id === id)?.label)
+                  .join(', ')
                 : '—'}
             </p>
             <p className={styles.previewLine}>

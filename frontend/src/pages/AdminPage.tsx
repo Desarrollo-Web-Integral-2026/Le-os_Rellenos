@@ -4,10 +4,12 @@ import { AdminDashboard } from '../components/features/AdminDashboard/AdminDashb
 
 export function AdminPage() {
   return (
-    <Container>
-      <AdminGate>
-        <AdminDashboard />
-      </AdminGate>
-    </Container>
+    <main id="main-content">
+      <Container>
+        <AdminGate>
+          <AdminDashboard />
+        </AdminGate>
+      </Container>
+    </main>
   )
 }

@@ -1,19 +1,17 @@
-import { useCart } from '../../../hooks/useCart'
-import styles from './CartIcon.module.css'
+import { useCart } from "../../../hooks/useCart";
+import styles from "./CartIcon.module.css";
 
-interface CartIconProps {
-  onClick: () => void
-}
-
-export function CartIcon({ onClick }: CartIconProps) {
-  const { totalItems } = useCart()
+export function CartIcon() {
+  const { totalItems, openCart } = useCart();
+  const label = `Abrir carrito, ${totalItems} ${totalItems === 1 ? "producto" : "productos"}`;
 
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={openCart}
       className={styles.iconButton}
-      aria-label={`Abrir carrito, ${totalItems} ${totalItems === 1 ? 'producto' : 'productos'}`}
+      aria-label={label}
+      title={label}
     >
       🛒
       {totalItems > 0 && (
@@ -22,5 +20,5 @@ export function CartIcon({ onClick }: CartIconProps) {
         </span>
       )}
     </button>
-  )
+  );
 }
