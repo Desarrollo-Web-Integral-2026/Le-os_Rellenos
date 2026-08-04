@@ -1,0 +1,16 @@
+.grid {
+  display: grid;
+  /* auto-fill + minmax = responsivo automático, sin necesidad de definir
+     columnas distintas por breakpoint manualmente */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-5);
+  width: 100%;
+}
+
+/* En móvil angosto (375px), fuerza 1 columna para que la tarjeta
+   no quede comprimida y el texto/precio no se corten */
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

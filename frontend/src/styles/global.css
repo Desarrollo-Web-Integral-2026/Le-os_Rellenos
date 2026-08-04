@@ -8,6 +8,8 @@
 
 html {
   color-scheme: dark;
+  /* Evita zoom horizontal accidental en iOS al rotar */
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -17,6 +19,8 @@ body {
   font-size: var(--fs-body);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  /* Red de seguridad: si algo se desborda, no genera scroll horizontal */
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -25,9 +29,10 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.25;
 }
 
-h1 { font-size: var(--fs-h1); }
-h2 { font-size: var(--fs-h2); }
-h3 { font-size: var(--fs-h3); }
+/* Tipografía fluida: escala sola entre mobile y desktop sin media queries */
+h1 { font-size: clamp(1.5rem, 4vw, var(--fs-h1)); }
+h2 { font-size: clamp(1.25rem, 3vw, var(--fs-h2)); }
+h3 { font-size: clamp(1.1rem, 2.5vw, var(--fs-h3)); }
 
 button, input, textarea {
   font-family: inherit;
