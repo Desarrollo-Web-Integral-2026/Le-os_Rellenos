@@ -1,30 +1,25 @@
-import { Button, Badge, Card, Input } from './components/ui'
+import { Button, Badge, Card } from './components/ui'
+import { Container } from './components/layout/Container/Container'
+import { ProductGrid } from './components/layout/ProductGrid/ProductGrid'
 
 function App() {
   return (
-    <div style={{ padding: 32, display: 'flex', flexDirection: 'column', gap: 24, maxWidth: 400 }}>
-      <h1>Leños Rellenos</h1>
-      <p>Sabor a la Leña — Tradición en cada bocado.</p>
-
-      <div style={{ display: 'flex', gap: 8 }}>
-        <Button variant="primary">Comprar</Button>
-        <Button variant="secondary">Agregar</Button>
-        <Button variant="whatsapp">Enviar a WhatsApp</Button>
-      </div>
-
-      <div style={{ display: 'flex', gap: 8 }}>
-        <Badge variant="available">Disponible</Badge>
-        <Badge variant="unavailable">Agotado</Badge>
-      </div>
-
-      <Card>
-        <h3>Leño de Arrachera</h3>
-        <p>Delicioso leño relleno de arrachera, queso y vegetales frescos.</p>
-        <p style={{ color: 'var(--color-orange-primary)', fontWeight: 700 }}>$89.00</p>
-      </Card>
-
-      <Input label="Nombre" placeholder="Emmanuel Santos Díaz" />
-    </div>
+    <Container>
+      <h1 style={{ padding: '24px 0' }}>Leños Rellenos</h1>
+      <ProductGrid>
+        {Array.from({ length: 6 }).map((_, i) => (
+          <Card key={i}>
+            <h3>Leño de Arrachera</h3>
+            <p>Relleno de arrachera, queso y vegetales frescos.</p>
+            <p style={{ color: 'var(--color-orange-primary)', fontWeight: 700 }}>$89.00</p>
+            <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
+              <Badge variant="available">Disponible</Badge>
+              <Button size="sm">Agregar</Button>
+            </div>
+          </Card>
+        ))}
+      </ProductGrid>
+    </Container>
   )
 }
 
