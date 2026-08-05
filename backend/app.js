@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const connectDB = require('./src/config/database');
 const { startDataRetentionJob } = require('./src/jobs/dataRetention.job');
+const authRoutes = require('./src/modules/auth/auth.routes')
+const clientesRoutes = require('./src/modules/clientes/clientes.routes')
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,6 +17,9 @@ app.use(express.json());
 app.get('/', (req, res) => {
     res.json({ mensaje: 'API de Leños Rellenos funcionando' });
 });
+
+app.use('/api/auth', authRoutes)
+app.use('/api/clientes', clientesRoutes)
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
