@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcryptjs')
 const Administrador = require('../../models/Administrador.model')
 
 const login = async ({ correo, password }) => {
@@ -11,7 +10,7 @@ const login = async ({ correo, password }) => {
     throw err
   }
 
-  const passwordValido = await bcrypt.compare(password, admin.password)
+  const passwordValido = await admin.compararPassword(password)
 
   if (!passwordValido) {
     const err = new Error('Credenciales incorrectas')
@@ -30,4 +29,5 @@ const login = async ({ correo, password }) => {
     admin: { id: admin._id, nombre: admin.nombre, rol: 'admin' },
   }
 }
+
 module.exports = { login }
