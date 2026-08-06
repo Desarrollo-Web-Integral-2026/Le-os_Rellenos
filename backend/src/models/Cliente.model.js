@@ -34,7 +34,7 @@ const clienteSchema = new mongoose.Schema(
     },
     estado: {
       type: String,
-      enum: ['activo', 'anonimizado'],
+      enum: ['activo', 'bloqueado', 'anonimizado'],
       default: 'activo',
     },
     fechaAnonimizacion: {
