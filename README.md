@@ -188,9 +188,6 @@ MONGO_URI=mongodb+srv://<usuario>:<password>@<cluster>.mongodb.net/lenos-relleno
 PORT=3000
 NODE_ENV=development
 JWT_SECRET=<clave-secreta>
-ADMIN_NOMBRE=Administrador
-ADMIN_CORREO=admin@example.com
-ADMIN_PASSWORD=<contraseña-inicial>
 ```
 
 **frontend/.env**
