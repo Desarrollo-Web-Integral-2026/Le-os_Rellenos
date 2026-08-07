@@ -65,3 +65,20 @@ export const mockProducts: Product[] = [
     stock: 0,
   },
 ]
+
+// ⚠️ SOLO PARA DESARROLLO: simula que el admin actualiza el stock de un producto,
+// mientras no existen RF6 (panel admin real) ni RF11 (API real de productos).
+// Cuando esas issues estén listas, esta función y su exposición en window se eliminan.
+export function __setMockStock(productId: string, stock: number) {
+  const product = mockProducts.find((p) => p.id_producto === productId)
+  if (product) {
+    product.stock = stock
+  }
+}
+
+if (import.meta.env.DEV) {
+  // Permite probar el comportamiento "tiempo real" de RF4 desde la consola del navegador:
+  // __setMockStock('3', 10)  -> restockea el producto con id '3'
+  ;(window as unknown as { __setMockStock?: typeof __setMockStock }).__setMockStock =
+    __setMockStock
+}
