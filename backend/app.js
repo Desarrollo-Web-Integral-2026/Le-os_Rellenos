@@ -5,6 +5,7 @@ const { startDataRetentionJob } = require('./src/jobs/dataRetention.job');
 const authRoutes = require('./src/modules/auth/auth.routes')
 const clientesRoutes = require('./src/modules/clientes/clientes.routes')
 const arcoRouter = require('./src/modules/arco/arco.routes')
+const auditoriaRoutes = require('./src/modules/auditoria/auditoria.routes')
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes)
 app.use('/api/clientes', clientesRoutes)
 app.use('/api/arco', arcoRouter)
+app.use('/api/auditoria', auditoriaRoutes)
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
