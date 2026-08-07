@@ -6,6 +6,8 @@ const authRoutes = require('./src/modules/auth/auth.routes')
 const clientesRoutes = require('./src/modules/clientes/clientes.routes')
 const arcoRouter = require('./src/modules/arco/arco.routes')
 const auditoriaRoutes = require('./src/modules/auditoria/auditoria.routes')
+const consentimientoRoutes = require('./src/modules/consentimiento/consentimiento.routes')
+const transferenciaRoutes = require('./src/modules/transferencia/transferencia.routes')
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,6 +26,8 @@ app.use('/api/auth', authRoutes)
 app.use('/api/clientes', clientesRoutes)
 app.use('/api/arco', arcoRouter)
 app.use('/api/auditoria', auditoriaRoutes)
+app.use('/api/consentimiento', consentimientoRoutes)
+app.use('/api/transferencia', transferenciaRoutes)
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);

@@ -41,13 +41,25 @@ const clienteSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    // --- Campos nuevos para la issue de transferencias a terceros ---
+    consentimientoTransferencia: {
+      type: Boolean,
+      default: false,
+    },
+    fechaConsentimiento: {
+      type: Date,
+      default: null,
+    },
+    finalidadConsentimiento: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true }
 )
 
 clienteSchema.index({ estado: 1, fechaRegistro: 1 })
 
-// Criterio 1 — cifrar campos sensibles antes de guardar
 clienteSchema.pre('save', async function () {
   if (this.isModified('nombre') && this.nombre) {
     this.nombre = encryptField(this.nombre)
@@ -60,7 +72,6 @@ clienteSchema.pre('save', async function () {
   }
 })
 
-// Descifrar al leer
 clienteSchema.post('find', function (docs) {
   docs.forEach((doc) => {
     try {

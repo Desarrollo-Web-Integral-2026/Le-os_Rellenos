@@ -13,9 +13,9 @@ const seedCliente = async () => {
 
     // Insertar pasando por los hooks de Mongoose (se cifra automáticamente)
     const cliente = new Cliente({
-        nombre: 'Luis Manuel',
-        telefono: '4181234567',
-        ubicacion: 'Dolores Hidalgo, Guanajuato',
+        nombre: 'Manuel Lopez',
+        telefono: '4181108329',
+        ubicacion: 'San Diego de la Union, Guanajuato',
         finalidad: 'pedido',
         diasRetencion: 365,
         estado: 'activo',
