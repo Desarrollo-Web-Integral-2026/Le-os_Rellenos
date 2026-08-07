@@ -10,6 +10,8 @@ const arcoRouter = require('./src/modules/arco/arco.routes')
 const auditoriaRoutes = require('./src/modules/auditoria/auditoria.routes')
 const consentimientoRoutes = require('./src/modules/consentimiento/consentimiento.routes')
 const transferenciaRoutes = require('./src/modules/transferencia/transferencia.routes')
+const productoRoutes = require('./src/modules/producto/producto.routes');
+const categoriaRoutes = require('./src/modules/categoria/categoria.routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -32,6 +34,8 @@ app.use('/api/arco', arcoRouter)
 app.use('/api/auditoria', auditoriaRoutes)
 app.use('/api/consentimiento', consentimientoRoutes)
 app.use('/api/transferencia', transferenciaRoutes)
+app.use('/api/productos', productoRoutes);
+app.use('/api/categorias', categoriaRoutes);
 
 // al final de app.js, después de todas las rutas, antes de app.listen()
 app.use((err, req, res, next) => {
