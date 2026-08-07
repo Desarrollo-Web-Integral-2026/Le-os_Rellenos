@@ -2,6 +2,12 @@ const jwt = require('jsonwebtoken')
 const Administrador = require('../../models/Administrador.model')
 
 const login = async ({ correo, password }) => {
+  if (typeof correo !== 'string' || typeof password !== 'string') {
+    const err = new Error('Credenciales incorrectas')
+    err.status = 401
+    throw err
+  }
+
   const admin = await Administrador.findOne({ correo })
 
   if (!admin) {
