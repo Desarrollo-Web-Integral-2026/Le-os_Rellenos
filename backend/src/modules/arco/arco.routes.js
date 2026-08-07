@@ -7,15 +7,38 @@ const {
 } = require('./arco.controller')
 const { verifyToken } = require('../../middlewares/auth.middleware')
 const { verifyRole, ROLES } = require('../../middlewares/role.middleware')
+const { auditLog } = require('../../middlewares/audit.middleware')
 
 const router = Router()
 
-// Criterio 1 — público, el cliente NO necesita login para solicitar
-router.post('/solicitud', crearSolicitud)
+router.post(
+  '/solicitud',
+  auditLog('CREACION', 'SolicitudArco', 'Cliente solicita ejercicio de derecho ARCO'),
+  crearSolicitud
+)
 
-// Admin — gestión de solicitudes, protegido
-router.get('/solicitudes', verifyToken, verifyRole(ROLES.ADMIN), getSolicitudes)
-router.patch('/solicitud/:id/resolver', verifyToken, verifyRole(ROLES.ADMIN), resolverSolicitud)
-router.patch('/cliente/:id/anonimizar', verifyToken, verifyRole(ROLES.ADMIN), anonimizarCliente)
+router.get(
+  '/solicitudes',
+  verifyToken,
+  verifyRole(ROLES.ADMIN),
+  auditLog('LECTURA', 'SolicitudArco', 'Admin consulta listado de solicitudes ARCO'),
+  getSolicitudes
+)
+
+router.patch(
+  '/solicitud/:id/resolver',
+  verifyToken,
+  verifyRole(ROLES.ADMIN),
+  auditLog('RESOLUCION', 'SolicitudArco', 'Admin resuelve solicitud ARCO'),
+  resolverSolicitud
+)
+
+router.patch(
+  '/cliente/:id/anonimizar',
+  verifyToken,
+  verifyRole(ROLES.ADMIN),
+  auditLog('ANONIMIZACION', 'Cliente', 'Admin ejecuta anonimización de cliente'),
+  anonimizarCliente
+)
 
 module.exports = router
