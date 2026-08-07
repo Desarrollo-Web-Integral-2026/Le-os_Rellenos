@@ -22,3 +22,9 @@
   color: var(--color-orange-primary);
   letter-spacing: 0.03em;
 }
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
