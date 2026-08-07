@@ -40,4 +40,10 @@ administradorSchema.methods.compararPassword = async function (passwordPlano) {
   return await bcrypt.compare(passwordPlano, this.password)
 }
 
+administradorSchema.methods.toJSON = function () {
+  const obj = this.toObject()
+  delete obj.password
+  return obj
+}
+
 module.exports = mongoose.model('Administrador', administradorSchema)

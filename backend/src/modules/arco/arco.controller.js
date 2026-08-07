@@ -4,10 +4,10 @@ const crearSolicitud = async (req, res) => {
   try {
     const { tipo, telefono, datosSolicitados, motivo } = req.body
 
-    if (!tipo || !telefono) {
+    if (!tipo || !telefono || typeof telefono !== 'string') {
       return res.status(400).json({
         success: false,
-        message: 'tipo y telefono son obligatorios',
+        message: 'tipo y telefono son obligatorios y deben ser texto',
       })
     }
 
