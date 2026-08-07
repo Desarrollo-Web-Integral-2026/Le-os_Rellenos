@@ -1,0 +1,61 @@
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.subtotal {
+  color: var(--color-orange-primary);
+  font-weight: 600;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.qtyButton {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-hover);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.qtyButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.qty {
+  min-width: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.removeButton {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: var(--color-danger);
+  font-size: var(--fs-small);
+  cursor: pointer;
+  text-decoration: underline;
+}

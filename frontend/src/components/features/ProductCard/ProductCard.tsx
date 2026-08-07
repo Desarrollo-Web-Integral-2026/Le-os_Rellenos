@@ -1,6 +1,7 @@
 import type { Product } from '../../../types/product'
 import { Card, Button } from '../../ui'
 import { formatPrice } from '../../../utils/formatPrice'
+import { useCart } from '../../../hooks/useCart'
 import styles from './ProductCard.module.css'
 
 interface ProductCardProps {
@@ -8,6 +9,9 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { addItem } = useCart()
+  const isOutOfStock = product.stock <= 0
+  
   return (
     <Card className={styles.card}>
       <img
@@ -23,7 +27,9 @@ export function ProductCard({ product }: ProductCardProps) {
         <p className={styles.description}>{product.descripcion}</p>
         <div className={styles.footer}>
           <span className={styles.price}>{formatPrice(product.precio)}</span>
-          <Button size="sm">Agregar</Button>
+          <Button size="sm" onClick={() => addItem(product)} disabled={isOutOfStock}>
+            {isOutOfStock ? 'Agotado' : 'Agregar'}
+          </Button>
         </div>
       </div>
     </Card>
