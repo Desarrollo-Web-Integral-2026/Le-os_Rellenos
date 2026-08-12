@@ -1,60 +1,50 @@
-const Categoria = require('../../models/Categoria.model');
+const categoriaService = require('./categoria.service');
 const { success, error } = require('../../utils/response');
+const asyncHandler = require('../../utils/asyncHandler');
 
-// GET /api/categorias
-async function getCategorias(req, res) {
-  const categorias = await Categoria.find().sort({ nombre: 1 });
+const getCategorias = asyncHandler(async (req, res) => {
+  const categorias = await categoriaService.findAll();
   return success(res, 200, categorias);
-}
+});
 
-// GET /api/categorias/:id
-async function getCategoriaById(req, res) {
-  const categoria = await Categoria.findById(req.params.id);
+const getCategoriaById = asyncHandler(async (req, res) => {
+  const categoria = await categoriaService.findById(req.params.id);
   if (!categoria) {
     return error(res, 404, 'Categoría no encontrada');
   }
   return success(res, 200, categoria);
-}
+});
 
-// POST /api/categorias
-async function createCategoria(req, res) {
-  const { nombre, descripcion } = req.body;
+const createCategoria = asyncHandler(async (req, res) => {
+  const { nombre } = req.body;
 
   if (!nombre || nombre.trim() === '') {
     return error(res, 400, 'El nombre de la categoría es obligatorio');
   }
 
-  const nuevaCategoria = await Categoria.create({ nombre, descripcion });
+  const nuevaCategoria = await categoriaService.create(req.body);
   return success(res, 201, nuevaCategoria, 'Categoría creada correctamente');
-}
+});
 
-// PUT /api/categorias/:id
-async function updateCategoria(req, res) {
-  const { nombre, descripcion } = req.body;
-
-  const categoriaActualizada = await Categoria.findByIdAndUpdate(
-    req.params.id,
-    { nombre, descripcion },
-    { new: true, runValidators: true }
-  );
+const updateCategoria = asyncHandler(async (req, res) => {
+  const categoriaActualizada = await categoriaService.update(req.params.id, req.body);
 
   if (!categoriaActualizada) {
     return error(res, 404, 'Categoría no encontrada');
   }
 
   return success(res, 200, categoriaActualizada, 'Categoría actualizada correctamente');
-}
+});
 
-// DELETE /api/categorias/:id
-async function deleteCategoria(req, res) {
-  const categoria = await Categoria.findByIdAndDelete(req.params.id);
+const deleteCategoria = asyncHandler(async (req, res) => {
+  const categoria = await categoriaService.remove(req.params.id);
 
   if (!categoria) {
     return error(res, 404, 'Categoría no encontrada');
   }
 
   return success(res, 200, null, 'Categoría eliminada correctamente');
-}
+});
 
 module.exports = {
   getCategorias,

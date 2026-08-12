@@ -4,6 +4,8 @@ const connectDB = require('./src/config/database');
 const { startDataRetentionJob } = require('./src/jobs/dataRetention.job');
 const { sanitizeInput } = require('./src/middlewares/sanitize.middleware')
 const { apiLimiter } = require('./src/middlewares/rateLimit.middleware')
+const { notFound, errorHandler } = require('./src/middlewares/errorHandler.middleware');
+
 const authRoutes = require('./src/modules/auth/auth.routes')
 const clientesRoutes = require('./src/modules/clientes/clientes.routes')
 const arcoRouter = require('./src/modules/arco/arco.routes')
@@ -36,6 +38,10 @@ app.use('/api/consentimiento', consentimientoRoutes)
 app.use('/api/transferencia', transferenciaRoutes)
 app.use('/api/productos', productoRoutes);
 app.use('/api/categorias', categoriaRoutes);
+
+// SIEMPRE al final, después de todas las rutas
+app.use(notFound);
+app.use(errorHandler);
 
 // al final de app.js, después de todas las rutas, antes de app.listen()
 app.use((err, req, res, next) => {
