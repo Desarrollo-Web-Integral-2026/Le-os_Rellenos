@@ -1,0 +1,10 @@
+.notice {
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.link {
+  color: var(--color-orange-primary);
+  text-decoration: underline;
+}

@@ -1,0 +1,29 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.backButton {
+  align-self: flex-start;
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-size: var(--fs-small);
+  padding: 0;
+  margin-bottom: var(--space-2);
+}
+
+.generalError {
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-small);
+}
+
+.submitButton {
+  width: 100%;
+  margin-top: var(--space-2);
+}
