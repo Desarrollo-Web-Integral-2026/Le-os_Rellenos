@@ -1,0 +1,88 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 40;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(560px, 92vw);
+  max-height: 85vh;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  z-index: 41;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.closeButton {
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.tabs {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4) 0;
+}
+
+.tab {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--color-text-secondary);
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: var(--fs-small);
+}
+
+.tabActive {
+  color: var(--color-orange-primary);
+  border-bottom-color: var(--color-orange-primary);
+}
+
+.body {
+  padding: var(--space-4);
+  overflow-y: auto;
+}
+
+.section {
+  margin-bottom: var(--space-4);
+}
+
+.section h3 {
+  font-size: var(--fs-body);
+  margin-bottom: var(--space-1);
+  color: var(--color-text-primary);
+}
+
+.section p {
+  color: var(--color-text-secondary);
+  font-size: var(--fs-small);
+  line-height: 1.6;
+}
+
+.updatedAt {
+  color: var(--color-text-muted);
+  font-size: var(--fs-small);
+  font-style: italic;
+  margin-top: var(--space-2);
+}

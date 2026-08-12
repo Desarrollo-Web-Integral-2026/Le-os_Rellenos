@@ -5,6 +5,12 @@
 }
 
 .link {
+  background: none;
+  border: none;
+  padding: 0;
   color: var(--color-orange-primary);
   text-decoration: underline;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
 }

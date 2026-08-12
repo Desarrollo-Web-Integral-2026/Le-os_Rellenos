@@ -10,6 +10,7 @@ export interface CartState {
 }
 
 export type CartAction =
+  | { type: 'HYDRATE'; state: CartState }
   | { type: 'ADD_ITEM'; product: Product }
   | { type: 'INCREASE_QTY'; productId: string }
   | { type: 'DECREASE_QTY'; productId: string }
