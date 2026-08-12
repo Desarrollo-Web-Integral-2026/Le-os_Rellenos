@@ -31,4 +31,30 @@ const getClienteById = async (req, res) => {
   }
 }
 
-module.exports = { getClientes, getClienteById }
+const createCliente = async (req, res) => {
+  try {
+    const { nombre, telefono, ubicacion } = req.body
+
+    if (!nombre || typeof nombre !== 'string') {
+      return res.status(400).json({ success: false, message: 'Nombre es obligatorio y debe ser texto'})
+    }
+    if (!telefono || typeof telefono !== 'string') {
+      return res.status(400).json({ success: false, message: 'Telefono obligatorioy debe ser texto'})
+    }
+
+    const { cliente, creado } = await clientesService.creaetOrFindCliente({ nombre, telefono, ubicacion })
+
+    return res.status(creado ? 201 : 200).json({
+      success: true,
+      message: creado ? 'Cliente registrado correctamente' : 'Cliente ya existente, se reutiliza el registro',
+      data: { id: cliente._id, telefono: cliente.telefono },
+    })
+  } catch (err) {
+    return res.status(err.status || 500).json({
+      success: false,
+      message: err.message,
+    })
+  }
+}
+
+module.exports = { getClientes, getClienteById, createCliente }
