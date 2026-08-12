@@ -14,6 +14,8 @@ const consentimientoRoutes = require('./src/modules/consentimiento/consentimient
 const transferenciaRoutes = require('./src/modules/transferencia/transferencia.routes')
 const productoRoutes = require('./src/modules/producto/producto.routes');
 const categoriaRoutes = require('./src/modules/categoria/categoria.routes');
+const whatsappRoutes = require('./src/modules/whatsapp/whatsapp.routes')
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -38,6 +40,10 @@ app.use('/api/consentimiento', consentimientoRoutes)
 app.use('/api/transferencia', transferenciaRoutes)
 app.use('/api/productos', productoRoutes);
 app.use('/api/categorias', categoriaRoutes);
+app.get('/api/whatsapp-test', (req, res) => {
+  res.json({ ok: true })
+})
+app.use('/api/whatsapp', whatsappRoutes)
 
 // SIEMPRE al final, después de todas las rutas
 app.use(notFound);
