@@ -15,6 +15,6 @@ export interface BusinessHours {
 export const businessHours: BusinessHours = {
   openDays: [2, 3, 4, 5, 6, 0], // martes a domingo (cerrado lunes, ajustar según el negocio real)
   openHour: 13,
-  closeHour: 16,
+  closeHour: 21,
   timezone: 'America/Mexico_City',
 }
