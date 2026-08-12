@@ -14,4 +14,29 @@ const getClienteById = async (id) => {
   return cliente
 }
 
-module.exports = { getClientes, getClienteById }
+// Busca por telefono en memoria (por el cifrado con IV aleatorio)
+const buscarClientePorTelefono = async (telefono) => {
+  const clientes = await Cliente.find()
+  return clientes.find((c) => c.telefono === telefono) || null
+}
+
+// Crear al cliente si no existe, o regresa el existente si el telefono ya esta registrado
+const creaetOrFindCliente = async ({ nombre, telefono, ubicacion }) => {
+  const existente = await buscarClientePorTelefono(telefono)
+
+  if(existente) {
+    return { cliente: existente, creado: false }
+  }
+
+  const cliente = new Cliente({
+    nombre,
+    telefono,
+    ubicacion,
+    finalidad: 'pedido',
+  })
+  await cliente.save()
+
+  return { cliente, creado: true }
+}
+
+module.exports = { getClientes, getClienteById, buscarClientePorTelefono, creaetOrFindCliente }
