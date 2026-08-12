@@ -1,10 +1,13 @@
 const { Router } = require('express')
-const { getClientes, getClienteById } = require('./clientes.controller')
+const { getClientes, getClienteById, createCliente } = require('./clientes.controller')
 const { verifyToken } = require('../../middlewares/auth.middleware')
 const { verifyRole, ROLES } = require('../../middlewares/role.middleware')
 const { auditLog } = require('../../middlewares/audit.middleware')
 
 const router = Router()
+
+// Publico - se crea/reutiliza el cliente al confirmar el pedido, sin login
+router.post('/', createCliente)
 
 router.get(
   '/', verifyToken, verifyRole(ROLES.ADMIN), auditLog('LECTURA', 'Cliente', 'Consulta de listado de clientes en panel admin'),
