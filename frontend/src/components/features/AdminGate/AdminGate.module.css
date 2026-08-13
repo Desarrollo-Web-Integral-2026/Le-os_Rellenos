@@ -1,0 +1,43 @@
+.wrapper {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+
+.form {
+  width: min(360px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.title {
+  font-size: var(--fs-h3);
+  text-align: center;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  font-size: var(--fs-small);
+  text-align: center;
+  margin-bottom: var(--space-2);
+}
+
+.lockoutNotice {
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-small);
+  text-align: center;
+}
+
+.submitButton {
+  width: 100%;
+}

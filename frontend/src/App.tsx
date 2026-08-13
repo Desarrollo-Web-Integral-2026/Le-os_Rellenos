@@ -1,33 +1,18 @@
-import { useState } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { CartProvider } from './context/CartContext'
-import { Container } from './components/layout/Container/Container'
-import { Header } from './components/layout/Header/Header'
-import { Footer } from './components/layout/Footer/Footer'
-import { ProductCatalog } from './components/features/ProductCatalog/ProductCatalog'
-import { CartDrawer } from './components/features/CartDrawer/CartDrawer'
-import { LenoCustomizer } from './components/features/LenoCustomizer/LenoCustomizer'
-import { Button } from './components/ui'
+import { HomePage } from './pages/HomePage'
+import { AdminPage } from './pages/AdminPage'
 
 function App() {
-  const [isCartOpen, setIsCartOpen] = useState(false)
-  const [isCustomizerOpen, setIsCustomizerOpen] = useState(false)
-
   return (
-    <CartProvider>
-      <Header onCartClick={() => setIsCartOpen(true)} />
-      <Container>
-        <div style={{ padding: '24px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h1>Leños Rellenos</h1>
-          <Button variant="secondary" onClick={() => setIsCustomizerOpen(true)}>
-            🎨 Arma tu leño
-          </Button>
-        </div>
-        <ProductCatalog />
-      </Container>
-      <Footer />
-      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-      <LenoCustomizer isOpen={isCustomizerOpen} onClose={() => setIsCustomizerOpen(false)} />
-    </CartProvider>
+    <BrowserRouter>
+      <CartProvider>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/admin" element={<AdminPage />} />
+        </Routes>
+      </CartProvider>
+    </BrowserRouter>
   )
 }
 

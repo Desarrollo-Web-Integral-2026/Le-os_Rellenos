@@ -1,0 +1,31 @@
+import { useState } from 'react'
+import { Container } from '../components/layout/Container/Container'
+import { Header } from '../components/layout/Header/Header'
+import { Footer } from '../components/layout/Footer/Footer'
+import { ProductCatalog } from '../components/features/ProductCatalog/ProductCatalog'
+import { CartDrawer } from '../components/features/CartDrawer/CartDrawer'
+import { LenoCustomizer } from '../components/features/LenoCustomizer/LenoCustomizer'
+import { Button } from '../components/ui'
+
+export function HomePage() {
+  const [isCartOpen, setIsCartOpen] = useState(false)
+  const [isCustomizerOpen, setIsCustomizerOpen] = useState(false)
+
+  return (
+    <>
+      <Header onCartClick={() => setIsCartOpen(true)} />
+      <Container>
+        <div style={{ padding: '24px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h1>Leños Rellenos</h1>
+          <Button variant="secondary" onClick={() => setIsCustomizerOpen(true)}>
+            🎨 Arma tu leño
+          </Button>
+        </div>
+        <ProductCatalog />
+      </Container>
+      <Footer />
+      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <LenoCustomizer isOpen={isCustomizerOpen} onClose={() => setIsCustomizerOpen(false)} />
+    </>
+  )
+}
