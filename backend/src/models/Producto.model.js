@@ -39,4 +39,11 @@ const productoSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Si el stock llega a 0, el producto se marca automáticamente como no disponible
+productoSchema.pre('validate', function (next) {
+  if (this.stock <= 0) {
+    this.disponible = false;
+  }
+});
+
 module.exports = mongoose.model('Producto', productoSchema);
