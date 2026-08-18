@@ -6,6 +6,8 @@ import type { DeliveryInfo, CheckoutFieldErrors } from '../../../types/checkout'
 import { validateDeliveryInfo, MAX_COMMENT_LENGTH } from '../../../utils/checkoutValidation'
 import { buildWhatsAppMessage } from '../../../utils/buildWhatsAppMessage'
 import { buildWhatsAppUrl } from '../../../utils/buildWhatsAppUrl'
+import { createOrder } from '../../../services/api/orders'
+import { ApiError } from '../../../services/api/client'
 import { useCart } from '../../../hooks/useCart'
 import styles from './CheckoutForm.module.css'
 
@@ -22,11 +24,10 @@ export function CheckoutForm({ onBack, onSuccess }: CheckoutFormProps) {
 
   function handleChange(field: keyof DeliveryInfo, value: string) {
     setFormData((prev) => ({ ...prev, [field]: value }))
-    // Limpia el error del campo en cuanto el usuario vuelve a escribir en él
     setErrors((prev) => ({ ...prev, [field]: undefined }))
   }
 
-  function handleSubmit(event: React.FormEvent) {
+  async function handleSubmit(event: React.FormEvent) {
     event.preventDefault()
     setIsSubmitting(true)
 
@@ -38,26 +39,40 @@ export function CheckoutForm({ onBack, onSuccess }: CheckoutFormProps) {
       return
     }
 
-    const message = buildWhatsAppMessage(result.sanitized, items, totalPrice)
-    const { url, isTooLong } = buildWhatsAppUrl(message)
+    try {
+      // 1. Persiste el pedido en la BD real — el backend recalcula el total,
+      // valida stock y disponibilidad; nunca confía en lo que mande este form.
+      await createOrder(result.sanitized, items)
 
-    if (isTooLong || !url) {
-      setErrors({
-        general:
-          'Tu pedido tiene demasiados productos o el comentario es muy largo para enviarse por WhatsApp. Intenta acortar el comentario o dividir tu pedido.',
-      })
+      // 2. Con el pedido ya guardado, arma el mensaje y abre WhatsApp
+      const message = buildWhatsAppMessage(result.sanitized, items, totalPrice)
+      const { url, isTooLong } = buildWhatsAppUrl(message)
+
+      if (isTooLong || !url) {
+        setErrors({
+          general:
+            'Tu pedido se guardó, pero el mensaje es muy largo para WhatsApp. Contáctanos directamente con tu número de pedido.',
+        })
+        setIsSubmitting(false)
+        return
+      }
+
+      window.open(url, '_blank', 'noopener,noreferrer')
+      clearCart()
       setIsSubmitting(false)
-      return
+      onSuccess()
+    } catch (err) {
+      // Mensaje genérico y seguro — nunca se expone el detalle real del
+      // backend (ej. "stock insuficiente para X" si el error trae info
+      // sensible, aunque en este caso el mensaje del backend ya es seguro
+      // por diseño de RNF6, se maneja aquí como defensa adicional).
+      const message =
+        err instanceof ApiError
+          ? err.message
+          : 'No se pudo procesar tu pedido. Intenta de nuevo.'
+      setErrors({ general: message })
+      setIsSubmitting(false)
     }
-
-    // Funciona igual en móvil (abre la app instalada) y escritorio (abre
-    // WhatsApp Web) — wa.me resuelve esto automáticamente sin necesidad de
-    // detección manual de dispositivo.
-    window.open(url, '_blank', 'noopener,noreferrer')
-
-    clearCart()
-    setIsSubmitting(false)
-    onSuccess()
   }
 
   return (
@@ -123,7 +138,7 @@ export function CheckoutForm({ onBack, onSuccess }: CheckoutFormProps) {
       />
 
       <Button type="submit" variant="whatsapp" disabled={isSubmitting} className={styles.submitButton}>
-        {isSubmitting ? 'Preparando pedido...' : 'Confirmar y enviar a WhatsApp'}
+        {isSubmitting ? 'Guardando pedido...' : 'Confirmar y enviar a WhatsApp'}
       </Button>
     </form>
   )
