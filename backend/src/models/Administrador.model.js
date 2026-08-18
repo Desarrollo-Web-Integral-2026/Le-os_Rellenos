@@ -21,18 +21,13 @@ const administradorSchema = new mongoose.Schema({
 }, { timestamps: true })
 
 // Criterio 1 — hashing automático con bcrypt antes de guardar
-administradorSchema.pre('save', async function (next) {
+administradorSchema.pre('save', async function () {
   // Solo re-hashea si el password es nuevo o fue modificado
   // (evita re-hashear un hash que ya está hasheado)
-  if (!this.isModified('password')) return next()
+  if (!this.isModified('password')) return
 
-  try {
-    const salt = await bcrypt.genSalt(SALT_ROUNDS)
-    this.password = await bcrypt.hash(this.password, salt)
-    next()
-  } catch (err) {
-    next(err)
-  }
+  const salt = await bcrypt.genSalt(SALT_ROUNDS)
+  this.password = await bcrypt.hash(this.password, salt)
 })
 
 // Método de instancia para comparar password en el login

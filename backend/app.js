@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const connectDB = require('./src/config/database');
 const { startDataRetentionJob } = require('./src/jobs/dataRetention.job');
 const { sanitizeInput } = require('./src/middlewares/sanitize.middleware')
@@ -14,11 +15,18 @@ const consentimientoRoutes = require('./src/modules/consentimiento/consentimient
 const transferenciaRoutes = require('./src/modules/transferencia/transferencia.routes')
 const productoRoutes = require('./src/modules/producto/producto.routes');
 const categoriaRoutes = require('./src/modules/categoria/categoria.routes');
+const pedidoRoutes = require('./src/modules/pedido/pedido.routes');
 const whatsappRoutes = require('./src/modules/whatsapp/whatsapp.routes')
 
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production'
+    ? process.env.FRONTEND_URL // dominio real en producción (Render/Railway/Vercel), configúralo cuando desplieguen
+    : 'http://localhost:5173', // Vite en desarrollo
+  credentials: true,
+}));
 
 connectDB();
 startDataRetentionJob();
@@ -40,6 +48,7 @@ app.use('/api/consentimiento', consentimientoRoutes)
 app.use('/api/transferencia', transferenciaRoutes)
 app.use('/api/productos', productoRoutes);
 app.use('/api/categorias', categoriaRoutes);
+app.use('/api/pedidos', pedidoRoutes);
 app.get('/api/whatsapp-test', (req, res) => {
   res.json({ ok: true })
 })
