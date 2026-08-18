@@ -1,23 +1,17 @@
 import type { Product } from '../../types/product'
-import { mockProducts } from '../../data/mockProducts'
-// import { apiGet } from './client' // <- descomentar cuando RF11 esté listo
+import { apiGet } from './client'
+import { mapBackendProduct } from './mappers'
 
-// Simula latencia de red realista para probar loading states sin backend real
-function simulateDelay<T>(data: T, ms = 600): Promise<T> {
-  return new Promise((resolve) => setTimeout(() => resolve(data), ms))
+interface BackendResponse<T> {
+  success: boolean
+  message: string | null
+  data: T
 }
 
-/**
- * Obtiene el catálogo de productos.
- *
- * TEMPORAL: devuelve mock data local. Cuando Luis publique RF11,
- * reemplazar el cuerpo de esta función por:
- *
- *   return apiGet<Product[]>('/productos')
- *
- * Ningún componente que consuma este servicio necesita cambiar.
- */
+// Ya no hay mock — consume el endpoint real de Luis (RF11).
 export async function getProducts(): Promise<Product[]> {
-  const data = await simulateDelay(mockProducts)
-  return data
+  const response = await apiGet<BackendResponse<Parameters<typeof mapBackendProduct>[0][]>>(
+    '/productos/listar',
+  )
+  return response.data.map(mapBackendProduct)
 }
