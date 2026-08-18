@@ -8,35 +8,29 @@ import { formatPrice } from '../../../utils/formatPrice'
 import { Button } from '../../ui'
 import styles from './CartDrawer.module.css'
 
-interface CartDrawerProps {
-  isOpen: boolean
-  onClose: () => void
-}
-
 type DrawerStep = 'cart' | 'checkout' | 'success'
 
-export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
-  const { items, totalPrice } = useCart()
+export function CartDrawer() {
+  const { items, totalPrice, isCartOpen, closeCart } = useCart()
   const { isOpen: isBusinessOpen } = useBusinessStatus()
   const [step, setStep] = useState<DrawerStep>('cart')
 
   useEffect(() => {
-    if (!isOpen) return
+    if (!isCartOpen) return
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape') handleClose()
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isOpen, onClose])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isCartOpen])
 
-  // Reinicia el flujo cada vez que el drawer se cierra, para no quedarse
-  // "atorado" en el paso de éxito la próxima vez que se abra.
   function handleClose() {
     setStep('cart')
-    onClose()
+    closeCart()
   }
 
-  if (!isOpen) return null
+  if (!isCartOpen) return null
 
   return (
     <>
@@ -44,7 +38,13 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
       <aside className={styles.drawer} role="dialog" aria-label="Tu carrito" aria-modal="true">
         <div className={styles.header}>
           <h2>{step === 'cart' ? 'Tu Carrito' : step === 'checkout' ? 'Checkout' : ''}</h2>
-          <button type="button" onClick={handleClose} className={styles.closeButton} aria-label="Cerrar carrito">
+          <button
+            type="button"
+            onClick={handleClose}
+            className={styles.closeButton}
+            aria-label="Cerrar carrito"
+            title="Cerrar carrito"
+          >
             ✕
           </button>
         </div>

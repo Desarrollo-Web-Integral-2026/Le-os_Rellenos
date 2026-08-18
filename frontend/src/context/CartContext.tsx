@@ -1,4 +1,4 @@
-import { createContext, useEffect, useMemo, useReducer, useRef } from 'react'
+import { createContext, useEffect, useMemo, useReducer, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import type { CartItem } from '../types/cart'
 import type { Product } from '../types/product'
@@ -14,23 +14,25 @@ interface CartContextValue {
   decreaseQty: (productId: string) => void
   removeItem: (productId: string) => void
   clearCart: () => void
+  // Estado de UI del panel del carrito, centralizado aquí para que
+  // cualquier componente (ProductCard, LenoCustomizer, CartIcon) pueda
+  // abrirlo sin pasar callbacks por props — reduce la fricción de clics
+  // exigida por RNF3 (máximo 3 clics para completar un pedido).
+  isCartOpen: boolean
+  openCart: () => void
+  closeCart: () => void
 }
 
 export const CartContext = createContext<CartContextValue | undefined>(undefined)
 
-// Pequeño debounce manual para no escribir en localStorage en cada
-// tick de un doble clic rápido en +/- ; 300ms es imperceptible para el
-// usuario pero evita escrituras excesivas al disco.
 const PERSIST_DEBOUNCE_MS = 300
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(cartReducer, initialCartState)
+  const [isCartOpen, setIsCartOpen] = useState(false)
   const isFirstRender = useRef(true)
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  // Hidratación: se ejecuta una sola vez al montar, después del primer
-  // render, para evitar mismatches de hidratación en SSR (no aplica aquí
-  // con Vite puro, pero es buena práctica dejarlo así).
   useEffect(() => {
     const stored = loadCartFromStorage()
     if (stored.items.length > 0) {
@@ -39,7 +41,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
     isFirstRender.current = false
   }, [])
 
-  // Persistencia automática ante cualquier cambio del carrito (con debounce).
   useEffect(() => {
     if (isFirstRender.current) return
 
@@ -73,11 +74,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     removeItem: (productId) => dispatch({ type: 'REMOVE_ITEM', productId }),
     clearCart: () => {
       dispatch({ type: 'CLEAR_CART' })
-      // Limpieza inmediata y explícita, no depender solo del debounce del
-      // useEffect — así el criterio "el carrito se limpia tras confirmar un
-      // pedido" (RNF4) queda garantizado sin esperar 300ms.
       clearCartStorage()
     },
+    isCartOpen,
+    openCart: () => setIsCartOpen(true),
+    closeCart: () => setIsCartOpen(false),
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

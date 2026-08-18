@@ -9,9 +9,17 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const { addItem } = useCart()
+  const { addItem, openCart } = useCart()
   const isOutOfStock = product.stock <= 0
-  
+
+  function handleAdd() {
+    addItem(product)
+    // Abre el carrito automáticamente: convierte "Agregar → abrir carrito
+    // → Continuar → Confirmar" (4 clics) en "Agregar → Continuar →
+    // Confirmar" (3 clics), tal como lo exige el criterio de RNF3.
+    openCart()
+  }
+
   return (
     <Card className={styles.card}>
       <div className={styles.imageWrapper}>
@@ -37,12 +45,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <p className={styles.description}>{product.descripcion}</p>
         <div className={styles.footer}>
           <span className={styles.price}>{formatPrice(product.precio)}</span>
-          <Button
-            size="sm"
-            onClick={() => addItem(product)}
-            disabled={isOutOfStock}
-            aria-disabled={isOutOfStock}
-          >
+          <Button size="sm" onClick={handleAdd} disabled={isOutOfStock} aria-disabled={isOutOfStock}>
             {isOutOfStock ? 'Agotado' : 'Agregar'}
           </Button>
         </div>

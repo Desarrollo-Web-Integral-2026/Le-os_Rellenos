@@ -60,3 +60,16 @@ img {
   white-space: nowrap;
   border: 0;
 }
+
+/* Navegación por teclado: foco visible y consistente en toda la app.
+   No se aplica con mouse/touch (:focus-visible ya distingue esto solo),
+   así que no afecta la estética para la mayoría de los usuarios. */
+:focus-visible {
+  outline: 2px solid var(--color-orange-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}

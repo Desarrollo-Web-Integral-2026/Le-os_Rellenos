@@ -25,6 +25,7 @@ export function CartItemRow({ item }: CartItemRowProps) {
           className={styles.qtyButton}
           onClick={() => decreaseQty(product.id_producto)}
           aria-label={`Quitar una unidad de ${product.nombre}`}
+          title={`Quitar una unidad de ${product.nombre}`}
         >
           −
         </button>
@@ -39,7 +40,7 @@ export function CartItemRow({ item }: CartItemRowProps) {
           onClick={() => increaseQty(product.id_producto)}
           disabled={isAtStockLimit}
           aria-label={`Agregar una unidad de ${product.nombre}`}
-          title={isAtStockLimit ? 'Alcanzaste el stock disponible' : undefined}
+          title={isAtStockLimit ? 'Alcanzaste el stock disponible' : `Agregar una unidad de ${product.nombre}`}
         >
           +
         </button>
